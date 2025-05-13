@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pipe Connect Puzzle</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #e0f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #00796b;
+    }
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(5, 60px);
+      grid-template-rows: repeat(5, 60px);
+      gap: 4px;
+      margin-top: 20px;
+    }
+    .tile {
+      width: 60px;
+      height: 60px;
+      background: #fff;
+      border: 2px solid #004d40;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .pipe {
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+      transform: rotate(0deg);
+    }
+    .start { background-image: url('https://i.imgur.com/U3rLsvX.png'); }
+    .end { background-image: url('https://i.imgur.com/OGnAXiA.png'); }
+    .straight { background-image: url('https://i.imgur.com/0MxjXtf.png'); }
+    .corner { background-image: url('https://i.imgur.com/yTXzfoT.png'); }
+  </style>
+</head>
+<body>
+  <h1>Pipe Connect - Level 1</h1>
+  <div id="grid"></div>
+  <script>
+    const grid = document.getElementById('grid');
+    const tiles = [
+      ['start', 'straight', 'corner', 'straight', 'corner'],
+      ['empty', 'empty', 'empty', 'corner', 'end'],
+      ['empty', 'empty', 'empty', 'empty', 'empty'],
+      ['empty', 'empty', 'empty', 'empty', 'empty'],
+      ['empty', 'empty', 'empty', 'empty', 'empty'],
+    ];
+
+    for (let y = 0; y < 5; y++) {
+      for (let x = 0; x < 5; x++) {
+        const div = document.createElement('div');
+        div.className = 'tile';
+        const pipeType = tiles[y][x];
+        if (pipeType !== 'empty') {
+          const pipe = document.createElement('div');
+          pipe.className = 'pipe ' + pipeType;
+          div.appendChild(pipe);
+          let angle = 0;
+          div.onclick = () => {
+            angle = (angle + 90) % 360;
+            pipe.style.transform = `rotate(${angle}deg)`;
+          };
+        }
+        grid.appendChild(div);
+      }
+    }
+  </script>
+</body>
+</html>
